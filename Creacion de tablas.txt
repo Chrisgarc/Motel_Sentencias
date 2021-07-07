@@ -1,0 +1,126 @@
+/*==============================================================*/
+/* Table: ACCESORIOS                                            */
+/*==============================================================*/
+create table ACCESORIOS 
+(
+   ACCESORIOS_ID        varchar(10)                    not null,
+   ACCESORIOS_TIPO      text                   not null,
+   ACCESORIOS_PRECIO    money                   not null,
+   constraint PK_ACCESORIOS primary key (ACCESORIOS_ID)
+);
+
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE 
+(
+   CLIENTE_CEDULA       varchar(10)                    not null,
+   MOTEL_RUC            varchar(10)                    null,
+   CLIENTE_NOMBRES      text                   not null,
+   CLIENTE_APELLIDOS    text                   not null,
+   CLIENTE_DIRECCION    varchar(40)                    not null,
+   CLIENTE_FECHANACIMIENTO date                           not null,
+   CLIENTE_TELEFONO     text                   not null,
+   CLIENTE_CORREO       text                   not null,
+   constraint PK_CLIENTE primary key (CLIENTE_CEDULA)
+);
+
+/*==============================================================*/
+/* Table: DETALLE_FACTURA                                       */
+/*==============================================================*/
+create or replace table DETALLE_FACTURA 
+(
+   ACCESORIOS_ID        varchar(10)                    null,
+   FECTUTA_NUMERO       integer                        null,
+   DETALLEFACTURA_TIPOACCESORIO integer                        not null
+);
+
+/*==============================================================*/
+/* Table: EMPLEADOS                                             */
+/*==============================================================*/
+create table EMPLEADOS 
+(
+   EMPLEADO_CODIGO      varchar(10)                    not null,
+   MOTEL_RUC            varchar(10)                    null,
+   EMPLEADO_NOMBRES     text                   not null,
+   EMPLEADO_APELLIDOS   text                   not null,
+   EMPLEADO_DIRECCION   varchar(40)                    not null,
+   EMPLEADO_FECHANACIMIENTO date                           not null,
+   EMPLEADO_TELEFONO    text                   not null,
+   EMPLEADO_CORREO      text                   not null,
+   EMPLEADO_FUNCION     text                   not null,
+   EMPLEADO_SUELDO      money(8,2)                   not null,
+   constraint PK_EMPLEADOS primary key (EMPLEADO_CODIGO)
+);
+
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA 
+(
+   FACTURA_FECHA        timestamp                      not null,
+   FECTUTA_NUMERO       integer                        not null,
+   CLIENTE_CEDULA       varchar(10)                    null,
+   EMPLEADO_CODIGO      varchar(10)                    null,
+   HABITACION_CODIGO    varchar(10)                    null,
+   FACTUTA_TOTAL        money(8,2)                   not null,
+   FACTURA_REPUTACION   text                   not null,
+   constraint PK_FACTURA primary key (FECTUTA_NUMERO)
+);
+
+/*==============================================================*/
+/* Table: HABITACIONES                                          */
+/*==============================================================*/
+create table HABITACIONES 
+(
+   HABITACION_CODIGO    varchar(10)                    not null,
+   MOTEL_RUC            varchar(10)                    null,
+   HABITACION_TIPO      text                   not null,
+   HABITACION_PRECIO    money(8,2)                   not null,
+   constraint PK_HABITACIONES primary key (HABITACION_CODIGO)
+);
+
+/*==============================================================*/
+/* Table: MANTENIMIENTO_HABITACION                              */
+/*==============================================================*/
+create or replace table MANTENIMIENTO_HABITACION 
+(
+   HABITACION_CODIGO    varchar(10)                    null,
+   MANTENIMIENTOHABITACION_CODIGO varchar(10)                    not null,
+   MANTENIMIENTOHABITACION_FECHA date                           null,
+   MANTENIMIENTOHABITACION_TIPO text                   not null,
+   MANTENIMIENTOHABITACION_PRECIO money(8,2)                   not null
+);
+
+/*==============================================================*/
+/* Table: MOTEL                                                 */
+/*==============================================================*/
+create or replace table MOTEL 
+(
+   MOTEL_RUC            varchar(10)                    not null,
+   MOTEL_NOMBRE         text                   not null,
+   MOTEL_DIRECCION      varchar(40)                    not null,
+   MOTEL_TELEFONO       text                   not null,
+   constraint PK_MOTEL primary key (MOTEL_RUC)
+);
+
+/*==============================================================*/
+/* Table: PAGO_SERVICIOS_BASICOS                                */
+/*==============================================================*/
+create or replace table PAGO_SERVICIOS_BASICOS 
+(
+   MOTEL_RUC            varchar(10)                    null,
+   PAGOSERVICIOSBASICOS_FECHA date                           not null,
+   PAGOSERVICIOSBASICOS_LUZ money(8,2)                   not null,
+   PAGOSERVICIOSBASICOS_AGUA money(8,2)                   not null,
+   PAGOSERVICIOSBASICOS_INTERNET money(8,2)                   not null
+);
+
+/*==============================================================*/
+/* Table: ACCESORIOS_POR_HABITACION                             */
+/*==============================================================*/
+create table ACCESORIOS_POR_HABITACION
+(
+ACCESORIOS_ID		VARCHAR(10)		NOT NULL,
+HABITACION_CODIGO 	VARCHAR(10)		NOT NULL
+);
