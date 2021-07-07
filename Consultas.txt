@@ -1,0 +1,48 @@
+Consultas 
+1
+
+select  habitaciones.habitacion_codigo, habitaciones.habitacion_tipo, 'Egresos' As Contabilidad,
+sum(mantenimientohabitacion_precio) as Precio
+from mantenimiento_habitacion
+join habitaciones on habitaciones.habitacion_codigo=mantenimiento_habitacion.habitacion_codigo 
+group by habitaciones.habitacion_codigo
+union 
+select habitaciones.habitacion_codigo, habitaciones.habitacion_tipo, 'Ingresos',
+sum(factura.factura_total)
+from factura 
+join habitaciones on habitaciones.habitacion_codigo=factura.habitacion_codigo
+group by habitaciones.habitacion_codigo;
+
+2
+
+select cliente.cliente_cedula, cliente_nombres, cliente_apellidos, factura_reputacion
+from factura
+join cliente on cliente.cliente_cedula=factura.cliente_cedula
+where cliente.cliente_cedula='1300078113';
+
+3
+
+select extract (year from pagoserviciosbasicos_fecha) as año,
+extract (month from pagoserviciosbasicos_fecha) as mes, 
+sum(coalesce (pagoserviciosbasicos_luz)+coalesce(pagoserviciosbasicos_agua)
++coalesce(pagoserviciosbasicos_internet)) as pagoserviciosbasicos_total
+from pago_servicios_basicos
+group by pagoserviciosbasicos_fecha 
+order by pagoserviciosbasicos_fecha;
+
+4
+
+  select factura.habitacion_codigo,
+  sum(detalle_factura.detallefactura_cantidad) as Accesorios_vendidos
+  from detalle_factura
+  join factura on factura.factura_numero=detalle_factura.factura_numero
+  group by factura.habitacion_codigo
+  order by factura.habitacion_codigo;
+
+5
+
+SELECT mantenimiento_habitacion.mantenimientohabitacion_tipo, 
+count(mantenimiento_habitacion.mantenimientohabitacion_tipo) as cantidad_de_veces
+FROM public.mantenimiento_habitacion
+  group by mantenimiento_habitacion.mantenimientohabitacion_tipo 
+  order by mantenimiento_habitacion.mantenimientohabitacion_tipo asc;
